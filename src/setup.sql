@@ -1,4 +1,7 @@
--- Create tables
+-- ====================
+--  TABLES CREATION
+-- ====================
+
 CREATE table organizations (
 	organization_id SERIAL PRIMARY KEY,
 	name varchar(150) NOT NULL,
@@ -6,13 +9,6 @@ CREATE table organizations (
 	contact_email varchar(255) NOT NULL,
 	logo_filename varchar(255) NOT NULL
 );
-
--- Insert Sample Data
-INSERT INTO organizations (name, description, contact_email, logo_filename) 
-VALUES 
-	('BrightFuture Builders', 'A nonprofit focused on improving community infrastructure through sustainable construction projects.', 'info@brightfutureBuilders.org', 'brightfuture-logo.png'),
-	('GreenHarvest Growers', 'An urban farming collective promoting food sustainability and education in local neighborhoods.', 'contact@greenharvest.org', 'greenharvest-logo.png'),
-	('UnityServe Volunteers', 'A volunteer coordination group supporting local charities and serveice initiatives.', 'hello@unityserve.org', 'unityserve-logo.png');
 
 
 CREATE TABLE projects (
@@ -23,6 +19,10 @@ CREATE TABLE projects (
     p_location VARCHAR(155) NOT NULL,
     p_date DATE NOT NULL
 );
+
+-- ====================
+--  INSERT DATA
+-- ====================
 
 
 INSERT INTO projects (organization_id, p_title, p_description, p_location, p_date) VALUES
@@ -48,8 +48,72 @@ INSERT INTO projects (organization_id, p_title, p_description, p_location, p_dat
 (3, 'Winter Clothing Drive & Shelter Support', 'Collecting, sorting, and delivering heavy coats, blankets, and footwear to winter relief shelters.', 'Downtown Mission Hub', '2026-11-14');
 
 
-SELECT * FROM projects;
 
-SELECT name, logo_filename, p_title, p_description, p_location, p_date
+-- =======================
+--  QUERIES TO .EJS FILES
+-- =======================
+
+SELECT name, p_title, p_description, p_location, p_date
 	FROM organizations org
 	INNER JOIN projects prj ON org.organization_id = prj.organization_id;
+
+
+CREATE TABLE categories (
+   category_id SERIAL PRIMARY KEY,
+   name VARCHAR(100) NOT NULL UNIQUE
+);
+
+
+CREATE TABLE project_categories (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+    PRIMARY KEY (project_id, category_id),
+    CONSTRAINT fk_project 
+        FOREIGN KEY (project_id) 
+        REFERENCES projects(project_id) 
+        ON DELETE CASCADE,
+    CONSTRAINT fk_category 
+        FOREIGN KEY (category_id) 
+        REFERENCES categories(category_id) 
+        ON DELETE CASCADE
+);
+
+INSERT INTO categories (name) 
+VALUES  ('Renewable Energy'),
+		('Infrastructure & Construction'),
+		('Urban Agriculture & Food'),
+		('Environmental Conservation'),
+		('Education & Workshops'),
+		('Community Relief & Support'),
+		('Accessibility & Inclusion');
+
+INSERT INTO project_categories (project_id, category_id) 
+	VALUES  (1, 1),
+			(1, 2),
+			(2, 2),
+			(2, 7),
+			(3, 2),
+			(3, 6),
+			(4, 2),
+			(4, 4),
+			(5, 1),
+			(5, 5),
+			(5, 6),
+			(6, 3),
+			(6, 4),
+			(7, 3),
+			(7, 4),
+			(8, 3),
+			(8, 5),
+			(9, 3),
+			(9, 4),
+			(10, 3),
+			(10, 5),
+			(11, 6),
+			(11, 3),
+			(12, 5),
+			(12, 7),
+			(13, 4),
+			(14, 6),
+			(14, 5),
+			(15, 6);
