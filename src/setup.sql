@@ -117,3 +117,10 @@ INSERT INTO project_categories (project_id, category_id)
 			(14, 6),
 			(14, 5),
 			(15, 6);
+
+
+SELECT name
+FROM categories;
+
+
+-- ALL THE CODE WILL BE ORGANIZED AFTER GRADING

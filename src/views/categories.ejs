@@ -2,10 +2,11 @@
     <main>
         <%= title %>
         <ul>
-            <li><a href="/environmental">Environmentals</a></li>
-            <li><a href="/Educational">Educational</a></li>
-            <li><a href="/comunity">Comunity Service</a></li>
-            <li><a href="/healthwellness">Health and Wellness</a></li>
+            <% categories.forEach(category=> { %>
+                <li>
+                    <a href=""><%= category.name %></a>
+                </li>
+                <% }); %>
         </ul>
     </main>
     <%- include('partials/footer') %>
