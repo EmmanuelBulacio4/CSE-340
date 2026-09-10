@@ -7,8 +7,8 @@
         <ul>
             <% projects.forEach(project=> { %>
                 <li>
-                    <%= new Date(project.p_date).toLocaleDateString('en-US', { year: 'numeric' , month: 'long' ,
-                        day: 'numeric' }) %>: <%= project.p_title %> (<%= project.name %>)
+                    <%= new Date(project.p_date).toLocaleDateString('en-US', { year: 'numeric' , month: 'long' , day: 'numeric' })%>:
+                    <%= project.p_title %> - <%= project.name %>
                 </li>
                 <% }); %>
         </ul>
