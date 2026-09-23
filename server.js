@@ -63,6 +63,36 @@ app.get("/categories", async (req, res) => {
     res.render('categories', {title, categories});
 });
 
+// Test route for 500 errors
+app.get('/test-error', (req, res, next) => {
+    const err = new Error('This is a test error');
+    err.status = 500;
+    next(err);
+});
+
+// Este middleware se ejecuta cuando ninguna ruta anterior coincide con la peticion del usuario
+app.use((req, res, next) => {
+    const err = new Error('Page Not Found');
+    err.status = 404;
+    next(err);
+});
+
+//Global Error Handler
+app.use((err, req, res, next) => {
+    console.log('Error occurred: ', err.message);
+    console.log('Stack trace: ', err.stack);
+
+    const status = err.status || 500;
+    const template = status === 400 ? '404' : '500';
+
+    const context = {
+        title: status === 400 ? 'Page Not Found' : 'Server Error',
+        error: err.message,
+        stack: err.stack
+    };
+
+    res.status(status).render(`errors/${template}`, context);
+});
 
 //Start up the server.
 app.listen(PORT, async () => {
