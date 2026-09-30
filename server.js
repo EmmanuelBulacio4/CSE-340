@@ -45,11 +45,11 @@ app.use((err, req, res, next) => {
     console.log('Error occurred: ', err.message);
     console.log('Stack trace: ', err.stack);
 
-    const status = err.status || 500;
-    const template = status === 400 ? '404' : '500';
+    const status = err.status || 404;
+    const template = status === 404 ? '404' : '500';
 
     const context = {
-        title: status === 400 ? 'Page Not Found' : 'Server Error',
+        title: status === 404 ? 'Page Not Found' : 'Server Error',
         error: err.message,
         stack: err.stack
     };
