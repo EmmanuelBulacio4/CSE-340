@@ -3,12 +3,18 @@
         <h1>
             <%= title %>
         </h1>
-        <h2>Upcoming Service Projects</h2>
+        <!-- <h2>Upcoming Service Projects</h2> -->
         <ul>
             <% projects.forEach(project=> { %>
                 <li>
-                    <%= new Date(project.p_date).toLocaleDateString('en-US', { year: 'numeric' , month: 'long' , day: 'numeric' })%>:
-                    <%= project.p_title %> - <%= project.name %>
+                    <%= new Date(project.p_date).toLocaleDateString('en-US', { year: 'numeric' ,
+                    month: 'long' , 
+                    day: 'numeric'
+                    })%>:
+                    <a href="/project/<%= project.project_id %>">
+                        <%= project.p_title %>
+                    </a> - 
+                    <%= project.name %>
                 </li>
                 <% }); %>
         </ul>
