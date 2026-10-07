@@ -222,3 +222,126 @@ Responsive Breakpoints & Layout Adapters
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+/* ==========================================================================
+Form Styles
+========================================================================== */
+
+main h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-nav-bg);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Contenedor del formulario */
+form {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 650px;
+    /* Limita el ancho en pantallas grandes para mejor legibilidad */
+    margin: 0 auto;
+}
+
+/* Grupo de campos (Label + Input) */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+/* Estilos para Inputs y Textarea */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    color: var(--color-text-main);
+    background-color: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* Textarea específico */
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+    /* Permite redimensionar solo verticalmente */
+}
+
+/* Estados Focus y Hover de los campos */
+.form-group input:hover,
+.form-group textarea:hover {
+    border-color: #cbd5e1;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    /* Feedback visual accesible al enfocar */
+}
+
+/* Botón de envío */
+form button[type="submit"] {
+    background-color: var(--color-accent);
+    color: #ffffff;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.85rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    align-self: flex-start;
+    /* Evita que el botón ocupe todo el ancho en desktop */
+    width: 100%;
+    /* Por defecto ocupa el ancho completo en móviles */
+    margin-top: 0.5rem;
+}
+
+form button[type="submit"]:hover {
+    background-color: var(--color-accent-hover);
+}
+
+form button[type="submit"]:active {
+    transform: translateY(1px);
+}
+
+/* ==========================================================================
+Form Responsive Adjustments
+========================================================================== */
+
+@media (min-width: 640px) {
+    form {
+        padding: 2.5rem;
+        /* Más espacio interno en tablets y PCs */
+    }
+
+    form button[type="submit"] {
+        width: auto;
+        /* El botón se ajusta a su contenido en pantallas medianas y grandes */
+    }
+
+    main h1 {
+        font-size: 2.25rem;
+    }
+}

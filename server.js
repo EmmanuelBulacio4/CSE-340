@@ -12,6 +12,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 //MIDDLEWARES
+// Allow Express to receive and process common POST data
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(express.static(path.join(__dirname, "public"))); //Permite que desde el navegador se vea lo que hay en la carpeta "public"
 
 app.set('view engine', 'ejs');
