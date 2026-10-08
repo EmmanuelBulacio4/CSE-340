@@ -29,6 +29,6 @@ router.get('/category/:id', showCategoryPage);
 router.get('/new-organization', showNewOrganizationForm);
 router.post('/new-organization', organizationValidation, processNewOrganizationForm);
 router.get("/edit-organization/:id", showEditOrganizationForm);
-router.post("/edit-organization/:id", processEditOrganizationForm);
+router.post("/edit-organization/:id", organizationValidation, processEditOrganizationForm);
 
 export default router;
