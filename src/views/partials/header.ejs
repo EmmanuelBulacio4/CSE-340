@@ -23,3 +23,13 @@
             <li><a href="/categories">Categories</a></li>
         </ul>
     </nav>
+    <% const messages=flash(); %>
+        <% Object.keys(messages).forEach(type=> { %>
+            <% if (messages[type].length> 0) { %>
+                <% messages[type].forEach(msg=> { %>
+                    <div class="alert <%= type %>" role="<%= type === 'error' ? 'alert' : 'status' %>">
+                        <%= msg %>
+                    </div>
+                <% }); %>
+            <% } %>
+        <% }); %>
