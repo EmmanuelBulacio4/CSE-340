@@ -167,6 +167,10 @@ main>ul>li strong {
     font-size: 1.1rem;
 }
 
+.asteric{
+    color: red;
+}
+
 
 footer {
     background-color: var(--color-surface);

@@ -4,20 +4,29 @@
             <%= title %>
         </h1>
 
+        <% if (errors.length > 0) { %>
+            <div class="alert error" role="alert">
+                <p>Please correct the following:</p>
+                <% errors.forEach(error => { %>
+                    <p><%= error.msg %></p>
+                <% }); %>
+            </div>
+        <% } %>
+
         <form action="/new-organization" method="POST"> <!-- Esta será la ruta para menejar la info del form y POST indica que los datos se envian en el cuerpo del request -->
             <div class="form-group">
-                <label for="name">Organization Name</label>
-                <input type="text" id="name" name="name" />
+                <label for="name">Organization Name<span class="asteric"> *</span></label>
+                <input type="text" id="name" name="name" value="<%= formData.name || '' %>" required maxlength="150"/>
             </div>
 
             <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description"></textarea>
+                <label for="description">Description <span class="asteric"> *</span></label>
+                <textarea id="description" name="description" required maxlength="500"><%= formData.description || '' %></textarea>
             </div>
-
+ 
             <div class="form-group">
-                <label for="contactEmail">Contact Email</label>
-                <input type="email" id="contactEmail" name="contactEmail" />
+                <label for="contactEmail">Contact Email <span class="asteric"> *</span></label>
+                <input type="email" id="contactEmail" name="contactEmail" value="<%= formData.contactEmail || '' %>" required />
             </div>
 
             <button type="submit">Create Organization</button>

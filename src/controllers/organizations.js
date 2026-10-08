@@ -1,6 +1,7 @@
 import { getAllOrganizations, getOrganizationDetails } from "../models/organizations.js";
 import { getProjectsByOrganizationId } from "../models/projects.js";
 import { createOrganization } from "../models/organizations.js";
+import { body, validationResult } from "express-validator";
 
 const showOrganizationsPage = async (req, res) => {
     const organizations = await getAllOrganizations();
@@ -22,10 +23,19 @@ const showOrganizationDetailsPage = async (req, res) => {
 const showNewOrganizationForm = async (req, res) => {
   const title = "Add New Organization";
 
-  res.render("new-organization", { title });
+  res.render("new-organization", { title, errors: [], formData: {} });
 };
 
 const processNewOrganizationForm = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).render("new-organization", {
+      title: "Add New Organization",
+      errors: errors.array(),
+      formData: req.body,
+    });
+  }
+
   const { name, description, contactEmail } = req.body;
   const logoFilename = "placeholder-logo.png"; // Use the placeholder logo for all new organizations
 
@@ -39,9 +49,31 @@ const processNewOrganizationForm = async (req, res) => {
   res.redirect(`/organization/${organizationId}`);
 };
 
+const organizationValidation = [
+  body("name")
+    .trim()
+    .notEmpty()
+    .withMessage("Organization name is required")
+    .isLength({ min: 3, max: 150 })
+    .withMessage("Organization name must be between 3 and 150 characters"),
+  body("description")
+    .trim()
+    .notEmpty()
+    .withMessage("Organization description is required")
+    .isLength({ max: 500 })
+    .withMessage("Organization description cannot exceed 500 characters"),
+  body("contactEmail")
+    .normalizeEmail()
+    .notEmpty()
+    .withMessage("Contact email is required")
+    .isEmail()
+    .withMessage("Please provide a valid email address"),
+];
+
 export {
   showOrganizationsPage,
   showOrganizationDetailsPage,
   showNewOrganizationForm,
   processNewOrganizationForm,
+  organizationValidation,
 };
