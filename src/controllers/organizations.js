@@ -70,10 +70,19 @@ const organizationValidation = [
     .withMessage("Please provide a valid email address"),
 ];
 
+const showEditOrganizationForm = async (req, res) => {
+  const organizationId = req.params.id;
+  const organizationDetails = await getOrganizationDetails(organizationId);
+
+  const title = "Edit Organization";
+  res.render("edit-organization", { title, organizationDetails });
+};
+
 export {
   showOrganizationsPage,
   showOrganizationDetailsPage,
   showNewOrganizationForm,
   processNewOrganizationForm,
   organizationValidation,
+  showEditOrganizationForm,
 };

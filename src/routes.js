@@ -9,7 +9,8 @@ import {
   showOrganizationDetailsPage,
   showNewOrganizationForm,
   processNewOrganizationForm,
-  organizationValidation
+  organizationValidation,
+  showEditOrganizationForm,
 } from "./controllers/organizations.js";
 import { showProjectDetailsPage } from './controllers/projects.js';
 import { showCategoryPage } from './controllers/categories.js';
@@ -26,5 +27,6 @@ router.get('/project/:id', showProjectDetailsPage);
 router.get('/category/:id', showCategoryPage);
 router.get('/new-organization', showNewOrganizationForm);
 router.post('/new-organization', organizationValidation, processNewOrganizationForm);
+router.get("/edit-organization/:id", showEditOrganizationForm);
 
 export default router;
