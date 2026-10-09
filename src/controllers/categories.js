@@ -3,6 +3,7 @@ import {
   getCategoryById,
   getProjectsByCategoryId,
   getCategoriesByProjectId,
+  updateCategoryAssignments,
 } from "../models/categories.js";
 
 import { getProjectDetails } from "../models/projects.js";
@@ -25,14 +26,14 @@ const showCategoryPage = async (req, res) => {
 };
 
 const showAssignCategoriesForm = async (req, res) => {
-    const projectId = req.params.id;
+    const projectId = req.params.projectId;
     const projectDetails = await getProjectDetails(projectId);
     const categories = await getAllCategories();
     const assignedCategories = await getCategoriesByProjectId(projectId);
 
     const title = 'Assign Categories to Project';
 
-    res.render("/assign-categories", { title, projectDetails, categories, assignedCategories });
+    res.render("assign-categories", { title, projectId, projectDetails, categories, assignedCategories });
 
 };
 
@@ -40,7 +41,7 @@ const processAssignCategoriesForm = async (req, res) => {
     const projectId = req.params.projectId;
     const selectedCategoryIds = req.body.categoryIds || [];
     
-    const categoryIdsArray = Array.isArray(selectedCategoryIds) ? selectedCategoryIds : [selectedCategoryIds]; //Esta linea convierte en un array las categorias que se le asiggnaran al proyecto
+    const categoryIdsArray = Array.isArray(selectedCategoryIds) ? selectedCategoryIds : [selectedCategoryIds];
     await updateCategoryAssignments(projectId, categoryIdsArray);
     
     req.flash("success", "Categories updated successfully.");
