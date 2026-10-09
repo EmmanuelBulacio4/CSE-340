@@ -2,7 +2,6 @@ import express from 'express';
 
 import { showHomePage } from './controllers/index.js';
 import { showOrganizationsPage } from './controllers/organizations.js';
-import { showProjectsPage } from './controllers/projects.js';
 import { showCategoriesPage } from './controllers/categories.js';
 import { testErrorPage } from './controllers/errors.js';
 import {
@@ -13,7 +12,13 @@ import {
   showEditOrganizationForm,
   processEditOrganizationForm,
 } from "./controllers/organizations.js";
-import { showProjectDetailsPage } from './controllers/projects.js';
+import {
+  showProjectDetailsPage,
+  showProjectsPage,
+  showNewProjectForm,
+  processNewProjectForm,
+  projectValidation,
+} from "./controllers/projects.js";
 import { showCategoryPage } from './controllers/categories.js';
 
 const router = express.Router();
@@ -30,5 +35,7 @@ router.get('/new-organization', showNewOrganizationForm);
 router.post('/new-organization', organizationValidation, processNewOrganizationForm);
 router.get("/edit-organization/:id", showEditOrganizationForm);
 router.post("/edit-organization/:id", organizationValidation, processEditOrganizationForm);
+router.get("/new-project", showNewProjectForm);
+router.post("/new-project", projectValidation, processNewProjectForm);
 
 export default router;
