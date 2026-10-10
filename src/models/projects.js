@@ -71,7 +71,7 @@ const getProjectDetails = async (id) => {
   prj.p_title AS title,
   prj.p_description AS description,
   prj.p_location AS location,
-  prj.p_date AS date,
+  TO_CHAR(prj.p_date, 'YYYY-MM-DD') AS date,
   org.name AS organization_name
 FROM projects prj
 INNER JOIN organizations org
