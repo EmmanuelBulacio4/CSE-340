@@ -104,6 +104,33 @@ const createCategory = async (name) => {
 };
 
 
+const updateCategory = async (name, categoryId) => {
+  const query = `
+    UPDATE categories
+    SET name = $1
+    WHERE category_id = $2
+    RETURNING category_id;
+  `;
+
+  const queryParams = [
+    name,
+    categoryId
+  ];
+
+  const result = await db.query(query, queryParams);
+
+  if (result.rows.length === 0) {
+    throw new Error("Category not found");
+  }
+
+  if (process.env.ENABLE_SQL_LOGGING === "true") {
+    console.log("Updated Category with ID:", categoryId);
+  }
+
+  return result.rows[0].category_id;
+};
+
+
 export {
   getAllCategories,
   getCategoryById,
@@ -112,4 +139,5 @@ export {
   assignCategoryToProject,
   updateCategoryAssignments,
   createCategory,
+  updateCategory,
 };
