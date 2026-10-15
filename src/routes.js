@@ -36,6 +36,11 @@ import {
   processEditProjectForm,
 } from "./controllers/projects.js";
 
+import {
+  showUserRegistrationForm,
+  processUserRegistrationForm
+} from "./controllers/users.js";
+
 const router = express.Router();
 
 router.get('/', showHomePage);
@@ -60,5 +65,7 @@ router.get('/new-category', showNewCategoryForm);
 router.post("/new-category", categoryValidation, processNewCategoryForm);
 router.get('/edit-category/:id', showEditCategoryForm);
 router.post("/edit-category/:id", categoryValidation, processEditCategoryForm);
+router.get("/register", showUserRegistrationForm);
+router.post("/register", processUserRegistrationForm);
 
 export default router;
