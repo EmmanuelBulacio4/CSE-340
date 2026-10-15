@@ -30,6 +30,23 @@ CREATE TABLE project_categories (
 	CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES projects(project_id) ON DELETE CASCADE,
 	CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE roles (
+    role_id SERIAL PRIMARY KEY,
+    role_name VARCHAR(50) UNIQUE NOT NULL,
+    role_description TEXT
+);
+
+CREATE TABLE users (
+	user_id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	email VARCHAR(100) UNIQUE NOT NULL,
+	password_hash VARCHAR(255) NOT NULL,
+	role_id INTEGER REFERENCES roles(role_id), 
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- ====================
 --  INSERT DATA
 -- ====================
@@ -187,6 +204,11 @@ INSERT INTO project_categories (project_id, category_id) VALUES
 	(14, 5),
 	(15, 6);
 
+
+INSERT INTO roles (role_name, role_description) VALUES 
+    ('user', 'Standard user with basic access'),
+    ('admin', 'Administrator with full system access');
+
 -- =======================
 --  QUERIES TO .EJS FILES
 -- =======================
@@ -197,7 +219,3 @@ SELECT name,
 	p_date
 FROM organizations org
 INNER JOIN projects prj ON org.organization_id = prj.organization_id;
-
-
-SELECT name
-FROM categories;
